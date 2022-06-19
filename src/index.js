@@ -45,12 +45,12 @@ const withdrawAction = (amount) => {
     }
 };
 
-const store = createStore(balanceReducer, composeWithDevTools());
-store.subscribe(() => {
-    console.log(store.getState());
-})
-store.dispatch(depositAction(1000));
-store.dispatch({type:DEPOSIT, payload: {amount: 500}});
-store.dispatch({type:WITHDRAW, payload: {amount: 750}});
+// const store = createStore(balanceReducer, composeWithDevTools());
+// store.subscribe(() => {
+//     console.log(store.getState());
+// })
+// store.dispatch(depositAction(1000));
+// store.dispatch({type:DEPOSIT, payload: {amount: 500}});
+// store.dispatch({type:WITHDRAW, payload: {amount: 750}});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
