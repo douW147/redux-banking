@@ -8,15 +8,22 @@ import {prettifyData} from "../../utils/index.js"
 function Tasks() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const tasks = useSelector(state => state.tasks);
+    const tasks = useSelector(state => state.tasks.data);
+    const loading = useSelector(state => state.tasks.loading);
+    console.log(tasks)
     const [search, setSearch] = useState("");
-    const filteredTasks = tasks.filter((task) => {return task.details.toLowerCase().includes(search)})
+    
     const dispatch = useDispatch();
     const [newTask, setNewTask] = useState({details: "", time: ""});
 
     useEffect(() => {
         dispatch(actions.fetchTasks())
     }, [dispatch])
+
+    let filteredTasks = [];
+    if (tasks.length > 0){
+        filteredTasks = tasks.filter((task) => {return task.details.toLowerCase().includes(search)});
+    }
 
     const handleCancelClick = () => {
         setIsOpen(false);
@@ -38,7 +45,10 @@ function Tasks() {
             <div className="col-lg-6 col-md-8 col-sm-10 col-10 shadow-lg main-box mt-4">
                 <div className="card-own p-4">
                     <div className="card-heading-own pb-2">
-                        <h1>Tasks</h1>
+                        <div className="head-load">
+                            <h1>Tasks</h1>
+                            {loading === true && <div class="lds-ring"><div></div><div></div><div></div><div></div></div>}
+                        </div>
                         {isOpen=== false &&
                         <button className="btn shadow is-open-btn" 
                         onClick={() => {setIsOpen(true)}}>Add task <i className="fa fa-solid fa-circle-plus"></i></button>
