@@ -131,3 +131,6 @@ label{
     display: flex;
   }
   
+.--width100{
+    width: 100%;
+}

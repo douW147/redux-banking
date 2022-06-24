@@ -4,15 +4,14 @@ import Collapsible from "../Collapsible/Collapsible.jsx";
 import {useSelector, useDispatch} from "react-redux";
 import actions from "../../actions";
 import {prettifyData} from "../../utils/index.js"
+import {v4 as uuid} from "uuid";
 
 function Tasks() {
 
     const [isOpen, setIsOpen] = useState(false);
     const tasks = useSelector(state => state.tasks.data);
     const loading = useSelector(state => state.tasks.loading);
-    console.log(tasks)
     const [search, setSearch] = useState("");
-    
     const dispatch = useDispatch();
     const [newTask, setNewTask] = useState({details: "", time: ""});
 
@@ -31,7 +30,7 @@ function Tasks() {
     };
 
     const handleSaveClick = () => {
-        dispatch(actions.addTask({...newTask, id: Math.floor(Math.random() * 10000000)}));
+        dispatch(actions.addTask({...newTask, id: uuid()}));
         setNewTask({details: "", time: ""});
         setIsOpen(false);
     };
@@ -41,13 +40,13 @@ function Tasks() {
     };
 
     return(
-        <div className="row align-content-center justify-content-center align-items-center">
+        <div className="row align-content-center justify-content-center align-items-center --width100">
             <div className="col-lg-6 col-md-8 col-sm-10 col-10 shadow-lg main-box mt-4">
                 <div className="card-own p-4">
                     <div className="card-heading-own pb-2">
                         <div className="head-load">
                             <h1>Tasks</h1>
-                            {loading === true && <div class="lds-ring"><div></div><div></div><div></div><div></div></div>}
+                            {loading === true && <div className="lds-ring"><div></div><div></div><div></div><div></div></div>}
                         </div>
                         {isOpen=== false &&
                         <button className="btn shadow is-open-btn" 
