@@ -1,11 +1,12 @@
 import axios from "axios";
 import { FETCH_TASKS_PENDING, FETCH_TASKS_FULFILLED, FETCH_TASKS_REJECTED, ADD_TASK_PENDING, host, ADD_TASK_FULFILLED, ADD_TASK_REJECTED,DELETE_TASK_FULFILLED, DELETE_TASK_PENDING, DELETE_TASK_REJECTED } from "../constants/actionTypes";
-import {put} from "redux-saga/effects"
+import {put, call} from "redux-saga/effects";
+import { fetchTasks } from "../api/tasks";
 
 export const fetchTasksWorkerSaga = function*() {
     yield put({ type: FETCH_TASKS_PENDING });
     try{
-        const response = yield axios.get(`${host}/tasks`);
+        const response = yield call(fetchTasks);
         yield put({ type: FETCH_TASKS_FULFILLED, payload: response });
     } catch(error)
     {
